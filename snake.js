@@ -24,13 +24,102 @@ const createFood = () => {
     gameBoardPixels[currentFoodPosition].classList.add("food")
 }
 
-// Controlling the snake
+
+// Controlling the snake direction
 const LEFT_DIR = 37
 const UP_DIR = 38
 const RIGHT_DIR = 39
 const DOWN_DIR = 40
 
 let snakeCurrentDir = RIGHT_DIR
+
+const changeDirection = newDirectionCode => {
+    if (newDirectionCode == snakeCurrentDir) return;
+
+    if (newDirectionCode == LEFT_DIR && snakeCurrentDir !== RIGHT_DIR) {
+        snakeCurrentDir = newDirectionCode
+    }
+    else if (newDirectionCode == UP_DIR && snakeCurrentDir !== DOWN_DIR) {
+        snakeCurrentDir = newDirectionCode
+    }
+    else if (newDirectionCode == RIGHT_DIR && snakeCurrentDir !== LEFT_DIR) {
+        snakeCurrentDir = newDirectionCode
+    }
+    else if (newDirectionCode == DOWN_DIR && snakeCurrentDir !== UP_DIR) {
+        snakeCurrentDir = newDirectionCode
+    }
+}
+
+// if (
+//     (newDirectionCode === LEFT_DIR && snakeCurrentDir !== RIGHT_DIR) ||
+//     (newDirectionCode === UP_DIR && snakeCurrentDir !== DOWN_DIR) ||
+//     (newDirectionCode === RIGHT_DIR && snakeCurrentDir !== LEFT_DIR) ||
+//     (newDirectionCode === DOWN_DIR && snakeCurrentDir !== UP_DIR)
+// ) {
+//     snakeCurrentDir = newDirectionCode;
+// }
+
+// Snake starting position
+let currentHeadPosition = TOTAL_PIXEL_COUNT / 2;
+
+// Set initial length
+let snakeLength = 200
+
+// Move snake
+const moveSnake = () => {
+    switch (snakeCurrentDir) {
+        case LEFT_DIR:
+            --currentHeadPosition
+            const isHeadAtLeft = (currentHeadPosition % LINE_PIXEL_COUNT == LINE_PIXEL_COUNT - 1) || currentHeadPosition < 0
+            // const isHeadAtLeft = currentHeadPosition <= 0
+            if (isHeadAtLeft) {
+                console.log(`current head position: ${currentHeadPosition}`)
+                currentHeadPosition = currentHeadPosition + LINE_PIXEL_COUNT
+            }
+            break;
+
+        case RIGHT_DIR:
+            currentHeadPosition++
+            const isHeadAtRight = (currentHeadPosition % LINE_PIXEL_COUNT == 0)
+            if (isHeadAtRight) {
+                currentHeadPosition = currentHeadPosition - LINE_PIXEL_COUNT
+            }
+            break;
+
+        case UP_DIR:
+            currentHeadPosition = currentHeadPosition - LINE_PIXEL_COUNT
+            const isHeadAtTop = currentHeadPosition < 0
+            if (isHeadAtTop) {
+                currentHeadPosition = currentHeadPosition + TOTAL_PIXEL_COUNT
+            }
+            break;
+
+        case DOWN_DIR:
+            currentFoodPosition = currentHeadPosition + LINE_PIXEL_COUNT
+            const isHeadAtBottom = currentHeadPosition > TOTAL_PIXEL_COUNT - 1
+            if (isHeadAtBottom) {
+                currentHeadPosition = currentHeadPosition - TOTAL_PIXEL_COUNT
+            }
+            break;
+        
+        default:
+            break;
+    }
+
+    let nextSnakeHeadPixel = gameBoardPixels(currentHeadPosition)
+
+    // Uses CSS class to see if the head is crossing onto the body of the snake
+    if (nextSnakeHeadPixel.classList.contains("snakeBodyPixel")) {
+        alert(`You ate ${totalFoodEaten} and traveled ${totalDistanceTraveled}. Then died :(`)
+        
+        // Improve with end window, better restart
+        window.location.reload()
+    }
+
+    // If pixel is blank, it becomes part of the snake
+    nextSnakeHeadPixel.classList.add("snakeBodyPixel")
+
+}
 
 createGameBoardPixels()
 
