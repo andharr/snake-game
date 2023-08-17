@@ -26,10 +26,15 @@ const createFood = () => {
 
 
 // Controlling the snake direction
-const LEFT_DIR = 37
-const UP_DIR = 38
-const RIGHT_DIR = 39
-const DOWN_DIR = 40
+const LEFT_DIR = "ArrowLeft"
+const UP_DIR = "ArrowUp"
+const RIGHT_DIR = "ArrowRight"
+const DOWN_DIR = "ArrowDown"
+
+// const LEFT_DIR = 37
+// const UP_DIR = 38
+// const RIGHT_DIR = 39
+// const DOWN_DIR = 40
 
 let snakeCurrentDir = RIGHT_DIR
 
@@ -63,7 +68,7 @@ const changeDirection = newDirectionCode => {
 let currentHeadPosition = TOTAL_PIXEL_COUNT / 2;
 
 // Set initial length
-let snakeLength = 200
+let snakeLength = 400
 
 // Move snake
 const moveSnake = () => {
@@ -95,7 +100,7 @@ const moveSnake = () => {
             break;
 
         case DOWN_DIR:
-            currentFoodPosition = currentHeadPosition + LINE_PIXEL_COUNT
+            currentHeadPosition = currentHeadPosition + LINE_PIXEL_COUNT
             const isHeadAtBottom = currentHeadPosition > TOTAL_PIXEL_COUNT - 1
             if (isHeadAtBottom) {
                 currentHeadPosition = currentHeadPosition - TOTAL_PIXEL_COUNT
@@ -126,15 +131,37 @@ const moveSnake = () => {
         nextSnakeHeadPixel.classList.remove("snakeBodyPixel")
     }, snakeLength)
 
+    // Logic when snake eats food
+    if (currentHeadPosition == currentFoodPosition) {
+        totalFoodEaten++
+        document.getElementById("pointsEarned").innerText = totalFoodEaten
+        snakeLength += 200
+        createFood()
+    }
+
 }
 
+// Draw the board, start game
 createGameBoardPixels();
-
 createFood();
 
-let moveSnakeInterval = setInterval(moveSnake, 100)
+// Set animation speed
+let moveSnakeInterval = setInterval(moveSnake, 200)
 
+// Keyboard interactions
+addEventListener("keydown", e => changeDirection(e.key))
 
+// Event listeners for on-screen keys
+const leftButton = document.getElementById("leftButton")
+const rightButton = document.getElementById("rightButton")
+const upButton = document.getElementById("upButton")
+const downButton = document.getElementById("downButton")
+
+// Event listeners for arrow keys
+leftButton.onclick = () => changeDirection(LEFT_DIR)
+rightButton.onclick = () => changeDirection(RIGHT_DIR)
+upButton.onclick = () => changeDirection(UP_DIR)
+downButton.onclick = () => changeDirection(DOWN_DIR)
 
 
 
