@@ -7,7 +7,22 @@
     <link rel="stylesheet" href="snake.css">
 </head>
 <body>
-    
+    <section id="gameContainer"></section>
+    <section id="scoreContainer">
+        <section class="scoreBoard">Food: <span id="pointsEarned">0</span></section>
+        <section class="scoreBoard">Blocks: <span id="pointsTraveled">0</span></section>
+    </section>
+
+    <!-- On screen controls for mobile -->
+    <section id="onScreenControllers">
+        <button id="leftButton">⬅️</button>
+        <div>
+            <button id="upButton">⬆️</button>
+            <button id="downButton">⬇️</button>
+        </div>
+        <button id="rightButton">➡️</button>
+
+    </section>
 </body>
 <script src="snake.js"></script>
 </html>
