@@ -110,6 +110,8 @@ const moveSnake = () => {
 
     // Uses CSS class to see if the head is crossing onto the body of the snake
     if (nextSnakeHeadPixel.classList.contains("snakeBodyPixel")) {
+        clearInterval(moveSnakeInterval)
+        
         alert(`You ate ${totalFoodEaten} and traveled ${totalDistanceTraveled} blocks. Then died :(`)
         
         // Improve with end window, better restart
@@ -119,13 +121,18 @@ const moveSnake = () => {
     // If pixel is blank, it becomes part of the snake
     nextSnakeHeadPixel.classList.add("snakeBodyPixel")
 
+    // Keep snake the correct length (remove excess tail)
+    setTimeout(() => {
+        nextSnakeHeadPixel.classList.remove("snakeBodyPixel")
+    }, snakeLength)
+
 }
 
 createGameBoardPixels();
 
 createFood();
 
-let moveSnakeInterval = setInterval(moveSnake, 250)
+let moveSnakeInterval = setInterval(moveSnake, 100)
 
 
 
