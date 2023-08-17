@@ -14,8 +14,8 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 20px 3px lightgray;
 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 1vw);
+    /* display: grid; */
+    /* grid-template-columns: repeat(auto-fill, 1vw); */
 
     /* grid-auto-rows: 1vw; */
     /* overflow: hidden; */
@@ -25,8 +25,8 @@ body {
     width: 1vw;
     height: 1vw;
     border-radius: 10px;
-    /* float: left; */
-    /* outline: 1px solid red; */
+    float: left;
+    outline: 1px solid red;
 }
 
 .food::before {
@@ -75,4 +75,46 @@ body {
 
 #onScreenControllers {
     display: none;
+}
+
+/* Responsive for mobile */
+@media only screen and (max-width: 786px) {
+    #gameContainer {
+        width: 80vw;
+        height: 80vw;
+    }
+
+    .gameBoardPixel {
+        width: 2vw;
+        height: 2vw;
+    }
+
+    #scoreContainer {
+        width: 80vw;
+    }
+
+    #onScreenControllers {
+        width: 80vw;
+        margin: 5vw auto;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    #onScreenControllers > div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #onScreenControllers button {
+        background-color: transparent;
+        height: 20vw;
+        width: 20vw;
+        font-size: 10vw;
+        border: none;
+    }
+
+    #onScreenControllers button:active {
+        background-color: darkgray;
+
 }
