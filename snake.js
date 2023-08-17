@@ -70,7 +70,7 @@ const moveSnake = () => {
     switch (snakeCurrentDir) {
         case LEFT_DIR:
             --currentHeadPosition
-            const isHeadAtLeft = (currentHeadPosition % LINE_PIXEL_COUNT == LINE_PIXEL_COUNT - 1) || currentHeadPosition < 0
+            const isHeadAtLeft = currentHeadPosition % LINE_PIXEL_COUNT == LINE_PIXEL_COUNT - 1 || currentHeadPosition < 0
             // const isHeadAtLeft = currentHeadPosition <= 0
             if (isHeadAtLeft) {
                 console.log(`current head position: ${currentHeadPosition}`)
@@ -106,11 +106,11 @@ const moveSnake = () => {
             break;
     }
 
-    let nextSnakeHeadPixel = gameBoardPixels(currentHeadPosition)
+    let nextSnakeHeadPixel = gameBoardPixels[currentHeadPosition]
 
     // Uses CSS class to see if the head is crossing onto the body of the snake
     if (nextSnakeHeadPixel.classList.contains("snakeBodyPixel")) {
-        alert(`You ate ${totalFoodEaten} and traveled ${totalDistanceTraveled}. Then died :(`)
+        alert(`You ate ${totalFoodEaten} and traveled ${totalDistanceTraveled} blocks. Then died :(`)
         
         // Improve with end window, better restart
         window.location.reload()
@@ -121,11 +121,11 @@ const moveSnake = () => {
 
 }
 
-createGameBoardPixels()
+createGameBoardPixels();
 
+createFood();
 
-
-
+let moveSnakeInterval = setInterval(moveSnake, 250)
 
 
 
