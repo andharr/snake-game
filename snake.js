@@ -14,6 +14,48 @@ const createGameBoardPixels = () => {
     }
 }
 
+const gameBoardPixels = document.getElementsByClassName("gameBoardPixel")
+
+let currentFoodPosition = 0
+const createFood = () => {
+    // if there's food on the board, go to that pixel and remove the "food" class
+    gameBoardPixels[currentFoodPosition].classList.remove("food")
+    currentFoodPosition = Math.floor(Math.random() * TOTAL_PIXEL_COUNT)
+    gameBoardPixels[currentFoodPosition].classList.add("food")
+}
+
+// Controlling the snake
+const LEFT_DIR = 37
+const UP_DIR = 38
+const RIGHT_DIR = 39
+const DOWN_DIR = 40
+
+let snakeCurrentDir = RIGHT_DIR
+
+createGameBoardPixels()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const createGameBoardPixels = () => {
 //     const totalPixelCount = linePixelCount ** 2;
 
