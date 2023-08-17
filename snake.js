@@ -139,6 +139,9 @@ const moveSnake = () => {
         createFood()
     }
 
+    totalDistanceTraveled++
+    document.getElementById("blocksTraveled").innerText = totalDistanceTraveled
+
 }
 
 // Draw the board, start game
@@ -149,7 +152,18 @@ createFood();
 let moveSnakeInterval = setInterval(moveSnake, 200)
 
 // Keyboard interactions
-addEventListener("keydown", e => changeDirection(e.key))
+let isChangingDirection = false;
+
+addEventListener("keydown", e => {
+    if (!isChangingDirection) {
+        isChangingDirection = true;
+        changeDirection(e.key);
+
+        setTimeout(() => {
+            isChangingDirection = false;
+        }, 100); // Adjust the delay as needed
+    }
+});  
 
 // Event listeners for on-screen keys
 const leftButton = document.getElementById("leftButton")
